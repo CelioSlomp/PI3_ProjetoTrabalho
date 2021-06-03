@@ -1,6 +1,6 @@
 .cadastro{
     position: fixed;
-    top: 40%;
+    top: 30%;
     left: 40%;
 }
 
@@ -11,4 +11,8 @@
     text-align: center;
     border: 1px solid #00FFFF;
     padding: 7px 6px;
+}
+
+.cadastro input[type = "submit"]{
+    align-items: center;
 }
