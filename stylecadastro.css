@@ -34,7 +34,7 @@ body{
     text-decoration: none;
 }
 
-.cadastro input[type = "text"], .cadastro input[type = "password"], .cadastro input[type = "date"]{
+.cadastro input[type = "text"], .cadastro input[type = "password"], .cadastro input[type = "email"]{
     background: none;
     display: flex;
     margin: 4px auto;
