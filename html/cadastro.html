@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title> Se cadastre! </title>
+    <!-- Linka alguns arquivos externos -->
     <link rel="stylesheet" href="../css/stylecadastro.css">
     <script src="../javascript/script.js"></script>
 
@@ -15,8 +16,10 @@
     <div class="cadastro">
 
         <h1>Cadastrar</h1>
-
+        <!-- Verifica se os emails e senhas estão certos -->
         <form method="POST" onsubmit="return Verificacoes(this)">
+
+            <!-- Aqui estão os inputs -->
             <input type="text" id="nome" placeholder="Nome" required> <br>
 
             <input type="email" id="email" placeholder="E-mail" required> <br>
@@ -29,6 +32,7 @@
 
         </form>
 
+        <!-- Link que leva à página de login -->
         <p>Já possui conta? <a href="index.html">Acesse aqui </a></p>
     </div>
     
