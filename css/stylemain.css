@@ -32,11 +32,11 @@ body{
     transform: translateX(-50%);
 }
 
-.barralateral ul{
+.barralateral .navitens{
     margin-top: 20px;
 }
 
-.barralateral ul li{
+.barralateral .navitens li{
     position: relative;
     height: 50px;
     width: 100%;
@@ -44,7 +44,7 @@ body{
     list-style: none;
 }
 
-.barralateral ul li a{
+.links_navbar{
     color: black;
     display: flex;
     align-items: center;
@@ -52,12 +52,12 @@ body{
     transition: all 0.2s ease;
 }
 
-.barralateral ul li a:hover{
+.links_navbar:hover{
     color: white;
 
 }
 
-.barralateral ul li a i{
+.barralateral .links_navbar i{
     height: 50px;
     min-width: 50px;
     border-radius: 12px;
