@@ -1,0 +1,84 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body{
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.barralateral{
+    height: 100%;
+    width: 280px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #5589A7;
+    padding: 6px 14px;
+}
+
+.barralateral #botao{
+    position: absolute;
+    left: 90%;
+    top: 15px;
+    font-size: 36px;
+    height: 50px;
+    width: 50px;
+    transform: translateX(-50%);
+}
+
+.barralateral ul{
+    margin-top: 20px;
+}
+
+.barralateral ul li{
+    position: relative;
+    height: 50px;
+    width: 100%;
+    margin: 0 4px;
+    list-style: none;
+}
+
+.barralateral ul li a{
+    color: black;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.barralateral ul li a:hover{
+    color: white;
+
+}
+
+.barralateral ul li a i{
+    height: 50px;
+    min-width: 50px;
+    border-radius: 12px;
+    line-height: 50px;
+    text-align: center;
+}
+
+.barralateral .conteudologo .logo {
+    color: black;
+    display: flex;
+    height: 50px;
+    width: 100%;
+    align-items: center;
+}
+
+.conteudologo .logo i{
+    font-size: 36px;
+    margin-right: 5px;
+}
+
+.conteudologo .logo .nomelogo {
+    font-size: 20px;
+    font-weight: 400;
+}
