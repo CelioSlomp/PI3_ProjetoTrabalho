@@ -9,17 +9,17 @@ body{
     position: relative;
     min-height: 100vh;
     width: 100%;
-    overflow: hidden;
 }
 
 .barralateral{
     height: 100%;
     width: 280px;
-    position: fixed;
+    position:fixed;
     top: 0;
     left: 0;
     background-color: #5589A7;
     padding: 6px 14px;
+    display: block;
 }
 
 .barralateral #botao{
@@ -81,4 +81,11 @@ body{
 .conteudologo .logo .nomelogo {
     font-size: 20px;
     font-weight: 400;
+}
+
+.configs{
+    position: absolute;
+    top: 40px;
+    left: 300px;
+    display: block;
 }

@@ -1,9 +1,9 @@
 function Verificacoes(form){
-    var nome = form.nome.value;
-    var email = form.email.value;
-    var emailConf = form.emailConf.value;
-    var senha = form.password.value;
-    var senhaConf = form.passwordConf.value;
+    let nome = form.nome.value;
+    let email = form.email.value;
+    let emailConf = form.emailConf.value;
+    let senha = form.password.value;
+    let senhaConf = form.passwordConf.value;
 
     if (nome.length >= 4 && nome.length <= 65){
         form.nome.focus;
