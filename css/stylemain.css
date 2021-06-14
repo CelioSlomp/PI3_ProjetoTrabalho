@@ -121,4 +121,5 @@ body{
     height: 30px;
     border-radius: 8px;
     font-size: 20px;
+    cursor: pointer;
 }
