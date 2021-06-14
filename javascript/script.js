@@ -28,3 +28,7 @@ function Verificacoes(form){
         return false;
     } // Else Nome
 } // Funcao
+
+function ConfigForm(form){
+    
+}

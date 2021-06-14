@@ -16,7 +16,6 @@
                 <i class='bx bxs-cog' ></i>
                 <div class="nomelogo"> Configurações</div>
             </div>
-            <i class='bx bx-menu' id="botao"></i>
             <hr>
 
         </div>
@@ -61,11 +60,57 @@
     </div>
 
     <div class="configs">
-        
+        <div class="titulo">
         <h1>Suas Configurações</h1>
         <hr>
-        
+        </div>
 
+        <div class="form">
+        <form method="POST">
+            <br>
+            <h3>Dados pessoais/empresariais</h3>
+            <hr> <br>
+            <label for="cpf">Qual é o seu cpf/cnpj?</label> <br>
+            <input type="number" id="cpf"
+            placeholder="Ex.: 123456789-12"> <br>
+
+            <label for="telefone">Qual é seu celular/telefone?</label><br>
+            <input type="number" id="telefone"
+            placeholder="Ex.: 12 123456789"> <br> <br>
+
+            <h3>Endereço</h3>
+            <hr>
+            <br>
+            <label for="endereco">Rua</label> <br>
+            <input type="text" id="endereco"
+            placeholder="Ex.: 123, Rua Nome da Rua"> <br>
+
+            <label for="bairro">Bairro</label> <br>
+            <input type="text" id="bairro"
+            placeholder="Ex.: Centro"> <br>
+
+            <label for="cidade">Cidade</label> <br>
+            <input type="text" id="cidade"
+            placeholder="Ex.: Blumenau, SC"> <br>
+
+            <label for="complemento">Complemento</label> <br>
+            <input type="text" id="complemento"
+            placeholder="Ex.: Casa, Apartamento"><br> <br>
+
+            <h3>Requisitos/Caracteristicas</h3>
+            <hr> <br>
+            
+            <label for="req"> Seus requisitos (usar '$' para separar)</label> <br>
+            <input type="text" id="req" 
+            placeholder="Ex.: Programador$Python$Ingles fluente"><br>
+
+            <input type="checkbox" id="clear">
+            <label for="clear"> Deseja limpar os requisitos/características?</label> 
+            <br> <br>
+            
+            <input type="submit" value="Salvar">
+        </form>
+        </div>
     </div>
     
 </body>
