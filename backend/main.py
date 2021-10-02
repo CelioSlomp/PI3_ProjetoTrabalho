@@ -242,5 +242,15 @@ if __name__ == '__main__':
             
         return jsonify(retorno)
     
+    # Lista todas as areas das empresas registradas
+    @app.route("/listar_desempregado")
+    def listar_desempregado():
+        desempregado = db.session.query(Desempregado).all()
+        
+        retorno = []
+        for i in desempregado:
+            retorno.append(i.json())
+            
+        return jsonify(retorno)
     # Inicia o servidor
     app.run(debug=True)
