@@ -46,3 +46,24 @@
     font-size: 20px;
     cursor: pointer;
 }
+
+.sobrenos{
+    position:absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.sobrenos .autor {
+    padding: 10px 10px;
+    border: 1px solid;
+    display: inline-flex;
+    width: 360px;
+    height: 200px;
+    
+}
+
+.titulo{
+    color: gray;
+}

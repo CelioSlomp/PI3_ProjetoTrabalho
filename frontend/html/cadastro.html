@@ -8,21 +8,22 @@
     <title> Se cadastre! </title>
     <!-- Linka alguns arquivos externos -->
     <link rel="stylesheet" href="../css/stylecadastro.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../javascript/script.js"></script>
 
 </head>
 <body>
 
-    <div class="cadastro">
+    <div class="cadastro" >
 
         <h1>Cadastrar</h1>
         <!-- Verifica se os emails e senhas estão certos -->
-        <form method="POST" onsubmit="return Verificacoes(this)">
+        <form onsubmit="return Verificacoes(this)">
 
             <!-- Aqui estão os inputs -->
             <input type="text" id="nome" placeholder="Nome" required> <br>
 
-            <input type="number" pattern="[0-9]+" id="cpf" placeholder="CPF/CNPJ" required> <br>
+            <input type="text" pattern="[0-9]+" id="cpf" placeholder="CPF/CNPJ" required> <br>
 
             <input type="email" id="email" placeholder="E-mail" required> <br>
             <input type="email" id="emailConf" placeholder="Confirme E-mail" required> <br>
@@ -30,7 +31,13 @@
             <input type="password" id="password" placeholder="Senha" required><br>
             <input type="password" id="passwordConf" placeholder="Confirme a Senha" required><br>
 
-            <input type="" id="empresa">
+            <input type="text" id="endereco" placeholder="Nome da Rua"> <br>
+
+            <input type="text" id="bairro" placeholder="Bairro"> <br>
+
+            <input type="text" id="cidade" placeholder="Cidade"> <br>
+
+            <input type="checkbox" id="empresa">
             <label for="empresa"> É uma empresa?</label>
 
             <input type="submit" id="botaoCadastro" value="Cadastrar">

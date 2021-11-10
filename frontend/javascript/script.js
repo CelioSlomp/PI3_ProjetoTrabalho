@@ -84,3 +84,84 @@ function VerCPF(cpf) {
 function VerCNPJ(cnpj) {
     alert("Bom Dia")
 }
+
+$(document).on("click", "#botaoCadastro",
+    function(){
+        nome = $("#nome").val();
+        cpf = $("#cpf").val();
+        email = $("#email").val();
+        password = $("#password").val();
+        endereco = $("#endereco").val();
+        bairro = $("#bairro").val();
+        cidade = $("#cidade").val();
+
+        var dados = JSON.stringify({ nome: nome, cpf: cpf, email: email,
+        password: password, endereco: endereco, bairro: bairro, cidade: cidade});
+
+        // Aqui vai ter que ter um if para ver se é uma empresa
+        // Ou um funcionário que será adicionado ao sistema.
+        if(true) {
+        $.ajax({
+            url: 'http://localhost:5000/adicionar_funcionario',
+            type: 'POST',
+            dataType: 'json', // Tipo de formato recebido
+            contentType: 'application/json', // Tipo de formato enviado
+            data: dados, // Os dados que são enviados
+            success: pessoaIncluida, // Chama a funcao para processar o resultado
+            error: erroAoIncluir
+        })
+        } else {
+            url: 'http://localhost:5000/adicionar_empresa',
+            type: 'POST',
+            dataType: 'json', // Tipo de formato recebido
+            contentType: 'application/json', // Tipo de formato enviado
+            data: dados, // Os dados que são enviados
+            success: pessoaIncluida, // Chama a funcao para processar o resultado
+            error: erroAoIncluir
+        }
+
+    function pessoaIncluida (retorno) {
+        if (retorno.resultado == "ok") {
+            alert("Pessoa incluída com sucesso!");
+
+            $("#nome").val("");
+            $("#cpf").val("");
+            $("#email").val("");
+            $("#password").val("");
+            $("#endereco").val("");
+            $("#bairro").val("");
+            $("#cidade").val("");
+
+        } else {
+            alert(retorno.resultado + ":" + retorno.detalhes);
+        }
+    }
+
+    function pessoaIncluida (retorno) {
+        if (retorno.resultado == "ok") {
+            alert("Pessoa incluída com sucesso!");
+
+            $("#nome").val("");
+            $("#cpf").val("");
+            $("#email").val("");
+            $("#password").val("");
+            $("#endereco").val("");
+            $("#bairro").val("");
+            $("#cidade").val("");
+
+        } else {
+            alert(retorno.resultado + ":" + retorno.detalhes);
+        }
+    }
+    /*
+     * Fazer mais um desses com jquery com incluirempresa.
+     * Utilizando ajax etc.
+    */
+
+    function erroAoIncluir (retorno) {
+        alert("ERRO: "+retorno.resultado + ":" + retorno.detalhes);
+    }
+
+    });
+
+});

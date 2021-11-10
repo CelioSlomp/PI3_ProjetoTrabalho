@@ -16,7 +16,7 @@ body{
     left: 50%;
     transform: translate(-50%, -50%);
     width: 400px;
-    height: 720px;
+    height: 900px;
     background: white;
     border-radius: 10px;
     text-align: center;
@@ -37,7 +37,7 @@ body{
 .cadastro input[type = "text"], .cadastro input[type = "password"], .cadastro input[type = "email"]{
     background: none;
     display: flex;
-    margin: 4px auto;
+    margin: 2px auto;
     padding: 12px 10px;
     border: 2px solid #808080;
     border-radius: 9px;
@@ -50,7 +50,7 @@ body{
     background: none;
     border: 0;
     display: block;
-    margin: 8px auto;
+    margin: 3px auto;
     text-align: center;
     padding: 12px 10px;
     border: 2px solid #808080;
