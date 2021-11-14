@@ -97,8 +97,9 @@ if __name__ == '__main__':
     def feed():
         return "aqui vai o feed"
 
-    @app.route("/adicionar_funcionario", methods=['post'])
+    @app.route("/adicionar_funcionario", methods=['POST'])
     def incluir_funcionario():
+        print("Passou aqui")
         resposta = jsonify({"resultado": "ok", "detalhes": "ok"})
         # receber as informações da nova pessoa
         dados = request.get_json()  # (force=True) dispensa Content-Type na requisição
@@ -106,14 +107,15 @@ if __name__ == '__main__':
             nova = Funcionario(**dados)  # criar a nova pessoa
             db.session.add(nova)  # adicionar no BD
             db.session.commit()  # efetivar a operação de gravação
-        except Exception as e:  # em caso de erro...
+            print("salvo no banco de dados.")
+        except Exception as e:
             # informar mensagem de erro
             resposta = jsonify({"resultado": "erro", "detalhes": str(e)})
         # adicionar cabeçalho de liberação de origem
         resposta.headers.add("Access-Control-Allow-Origin", "")
         return resposta
 
-    @app.route("/adicionar_empresa", methods=['post'])
+    @app.route("/adicionar_empresa", methods=['POST'])
     def adicionar_empresa():
         resposta = jsonify({"resultado": "ok", "detalhes": "ok"})
         # receber as informações da nova empresa

@@ -5,9 +5,8 @@ function Verificacoes(form) {
     let senha = form.password.value;
     let senhaConf = form.passwordConf.value;
     let cpf = form.cpf.value;
-    var empresa = document.querySelector("#empresa");
+    let result = document.querySelector('#empresa').checked
 
-    alert(empresa)
 
     if (nome.length >= 4 && nome.length <= 65) {
         form.nome.focus;
@@ -15,8 +14,8 @@ function Verificacoes(form) {
             form.email.focus;
             if (senha === senhaConf && senha.length > 8) {
                 form.senha.focus;
-                if (empresa.checked == true) {
-                    if (VerCNPJ(cpf)) {
+                if (result) {
+                    /*if (VerCNPJ(cpf)) {
                         return true;
                     } else {
                         alert("CNPJ inválido")
@@ -25,12 +24,13 @@ function Verificacoes(form) {
                 } else {
                     if (VerCPF(cpf)) {
                         return true;
+                        alert("Tranquilo")
                     }
                     else {
                         alert("CPF Inválido.")
                         return false;
                     }
-                }
+                }*/
             } // If Senha
             else {
                 alert("Senha diferente ou muito curta, tente novamente.")
@@ -87,6 +87,7 @@ function VerCNPJ(cnpj) {
 
 $(document).on("click", "#botaoCadastro",
     function(){
+        alert("Que xeirin de sexo")
         nome = $("#nome").val();
         cpf = $("#cpf").val();
         email = $("#email").val();
@@ -100,7 +101,6 @@ $(document).on("click", "#botaoCadastro",
 
         // Aqui vai ter que ter um if para ver se é uma empresa
         // Ou um funcionário que será adicionado ao sistema.
-        if(true) {
         $.ajax({
             url: 'http://localhost:5000/adicionar_funcionario',
             type: 'POST',
@@ -110,15 +110,7 @@ $(document).on("click", "#botaoCadastro",
             success: pessoaIncluida, // Chama a funcao para processar o resultado
             error: erroAoIncluir
         })
-        } else {
-            url: 'http://localhost:5000/adicionar_empresa',
-            type: 'POST',
-            dataType: 'json', // Tipo de formato recebido
-            contentType: 'application/json', // Tipo de formato enviado
-            data: dados, // Os dados que são enviados
-            success: pessoaIncluida, // Chama a funcao para processar o resultado
-            error: erroAoIncluir
-        }
+        
 
     function pessoaIncluida (retorno) {
         if (retorno.resultado == "ok") {
@@ -137,6 +129,7 @@ $(document).on("click", "#botaoCadastro",
         }
     }
 
+
     function pessoaIncluida (retorno) {
         if (retorno.resultado == "ok") {
             alert("Pessoa incluída com sucesso!");
@@ -153,6 +146,7 @@ $(document).on("click", "#botaoCadastro",
             alert(retorno.resultado + ":" + retorno.detalhes);
         }
     }
+    
     /*
      * Fazer mais um desses com jquery com incluirempresa.
      * Utilizando ajax etc.
@@ -163,5 +157,3 @@ $(document).on("click", "#botaoCadastro",
     }
 
     });
-
-});
