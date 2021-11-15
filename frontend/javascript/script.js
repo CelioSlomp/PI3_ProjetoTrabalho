@@ -88,6 +88,7 @@ function VerCNPJ(cnpj) {
 
 $ (document).on("click", "#botaoCadastro",
     function(){
+        alert("aa");
         nome = $("#nome").val();
         cpf = $("#cpf").val();
         email = $("#email").val();
@@ -102,8 +103,8 @@ $ (document).on("click", "#botaoCadastro",
         // Aqui vai ter que ter um if para ver se é uma empresa
         // Ou um funcionário que será adicionado ao sistema.
         $.ajax({
-            url: "http://127.0.0.1:5000/adicionar_funcionario",
-            type: 'GET',
+            url: "http://localhost:5000/adicionar_funcionario",
+            type: 'POST',
             dataType: 'json', // Tipo de formato recebido
             contentType: 'application/json', // Tipo de formato enviado
             data: dados, // Os dados que são enviados

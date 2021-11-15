@@ -1,28 +1,15 @@
-from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, jsonify, request
-import os
-
-app = Flask(__name__)
-
-# Cria o arquivo do banco de dados
-diretorio = os.path.dirname(os.path.abspath(__file__))
-arquivobanco = os.path.join(diretorio, "bancodados.db")
-
-# Configura o banco de dados
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + arquivobanco
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+from config import *
 
 
 # Classe usuário
 class Usuario(db.Model):
     '''Classe genérica usuário
-    
+
     Essa classe é uma classe genérica, que contém todos os atributos comuns
     entre os funcionários e as empresas
     '''
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.column(db.String(256))
+    nome = db.Column(db.String(256))
     email = db.Column(db.String(256))
     senha = db.Column(db.String(256))
     rua = db.Column(db.String(256))
@@ -34,9 +21,9 @@ class Usuario(db.Model):
 # Classe Empresa
 class Empresa(Usuario):
     '''Classe Empresa
-    
+
     Essa classe herda tudo de usuário e ainda complementa com o cnpj
-    
+
     return: todos os atributos no formato json.
     '''
     cnpj = db.Column(db.String(18))
@@ -57,9 +44,9 @@ class Empresa(Usuario):
 
 class Funcionario(Usuario):
     '''Classe Empresa
-    
+
     Essa classe herda tudo de usuário e ainda complementa com o cpf
-    
+
     return: todos os atributos no formato json.
     '''
     cpf = db.Column(db.String(14))
@@ -84,6 +71,7 @@ if __name__ == '__main__':
     db.create_all()
 
 
+
     # Retorna se o backend está funcionando ou não
     @app.route("/backend_operante")
     def rodando():
@@ -100,7 +88,7 @@ if __name__ == '__main__':
         return "aqui vai o feed"
 
 
-    @app.route("/adicionar_funcionario", methods=['GET'])
+    @app.route("/adicionar_funcionario", methods=['POST'])
     def incluir_funcionario():
         print("Passou aqui")
         resposta = jsonify({"resultado": "ok", "detalhes": "ok"})
@@ -115,7 +103,7 @@ if __name__ == '__main__':
             # informar mensagem de erro
             resposta = jsonify({"resultado": "erro", "detalhes": str(e)})
         # adicionar cabeçalho de liberação de origem
-        resposta.headers.add("Access-Control-Allow-Origin", "")
+        resposta.headers.add("Access-Control-Allow-Origin", "*")
         return resposta
 
 
@@ -151,6 +139,11 @@ if __name__ == '__main__':
     # Lista todos os funcionários cadastrados
     @app.route("/listar_funcionarios")
     def listar_funcionarios():
+        funcionario = Funcionario(nome='Jose da Costa', email='tetse@teste.com',
+                                  senha='testesenha', rua='rua Teste', bairro='Teste',
+                                  cidade='Teste', cpf='11111111111')
+        db.session.add(funcionario)
+        db.session.commit()
         funcionarios = db.session.query(Funcionario).all()
 
         retorno = []
