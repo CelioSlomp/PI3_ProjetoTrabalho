@@ -89,15 +89,18 @@ if __name__ == '__main__':
     def rodando():
         return "Backend operante 8)."
 
+
     @app.route("/")
     def login():
         return "aqui vai o login"
+
 
     @app.route("/feed")
     def feed():
         return "aqui vai o feed"
 
-    @app.route("/adicionar_funcionario", methods=['POST'])
+
+    @app.route("/adicionar_funcionario", methods=['GET'])
     def incluir_funcionario():
         print("Passou aqui")
         resposta = jsonify({"resultado": "ok", "detalhes": "ok"})
@@ -115,6 +118,7 @@ if __name__ == '__main__':
         resposta.headers.add("Access-Control-Allow-Origin", "")
         return resposta
 
+
     @app.route("/adicionar_empresa", methods=['POST'])
     def adicionar_empresa():
         resposta = jsonify({"resultado": "ok", "detalhes": "ok"})
@@ -130,7 +134,8 @@ if __name__ == '__main__':
         # adicionar cabeçalho de liberação de origem
         resposta.headers.add("Access-Control-Allow-Origin", "")
         return resposta
-    
+
+
     # Lista todas as empresas cadastradas
     @app.route("/listar_empresas")
     def listar_empresas():
@@ -153,6 +158,7 @@ if __name__ == '__main__':
             retorno.append(i.json())
 
         return jsonify(retorno)
+
 
     # Inicia o servidor
     app.run(debug=True)

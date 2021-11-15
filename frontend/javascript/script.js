@@ -14,8 +14,8 @@ function Verificacoes(form) {
             form.email.focus;
             if (senha === senhaConf && senha.length > 8) {
                 form.senha.focus;
-                if (result) {
-                    /*if (VerCNPJ(cpf)) {
+                /*if (result) {
+                    if (VerCNPJ(cpf)) {
                         return true;
                     } else {
                         alert("CNPJ inválido")
@@ -56,7 +56,7 @@ function VerCPF(cpf) {
         cpf == "11111111111" || cpf == "22222222222" || cpf == "33333333333" ||
         cpf == "44444444444" || cpf == "55555555555" || cpf == "66666666666" ||
         cpf == "77777777777" || cpf == "88888888888" || cpf == "99999999999") {
-        return false
+        return false;
     }
     for (i = 1; i <= 9; i++) {
         soma = soma + parseInt(cpf.substring(i - 1, i)) * (11 - i);
@@ -85,9 +85,9 @@ function VerCNPJ(cnpj) {
     alert("Bom Dia")
 }
 
-$(document).on("click", "#botaoCadastro",
+
+$ (document).on("click", "#botaoCadastro",
     function(){
-        alert("Que xeirin de sexo")
         nome = $("#nome").val();
         cpf = $("#cpf").val();
         email = $("#email").val();
@@ -102,15 +102,16 @@ $(document).on("click", "#botaoCadastro",
         // Aqui vai ter que ter um if para ver se é uma empresa
         // Ou um funcionário que será adicionado ao sistema.
         $.ajax({
-            url: 'http://localhost:5000/adicionar_funcionario',
-            type: 'POST',
+            url: "http://127.0.0.1:5000/adicionar_funcionario",
+            type: 'GET',
             dataType: 'json', // Tipo de formato recebido
             contentType: 'application/json', // Tipo de formato enviado
             data: dados, // Os dados que são enviados
             success: pessoaIncluida, // Chama a funcao para processar o resultado
             error: erroAoIncluir
-        })
-        
+        });
+
+
 
     function pessoaIncluida (retorno) {
         if (retorno.resultado == "ok") {
@@ -130,7 +131,7 @@ $(document).on("click", "#botaoCadastro",
     }
 
 
-    function pessoaIncluida (retorno) {
+    /*function pessoaIncluida (retorno) {
         if (retorno.resultado == "ok") {
             alert("Pessoa incluída com sucesso!");
 
@@ -145,8 +146,8 @@ $(document).on("click", "#botaoCadastro",
         } else {
             alert(retorno.resultado + ":" + retorno.detalhes);
         }
-    }
-    
+    }*/
+
     /*
      * Fazer mais um desses com jquery com incluirempresa.
      * Utilizando ajax etc.
@@ -155,5 +156,4 @@ $(document).on("click", "#botaoCadastro",
     function erroAoIncluir (retorno) {
         alert("ERRO: "+retorno.resultado + ":" + retorno.detalhes);
     }
-
     });
