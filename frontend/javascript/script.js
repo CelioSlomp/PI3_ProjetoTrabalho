@@ -1,52 +1,34 @@
-function Verificacoes(form) {
-    let nome = form.nome.value;
-    let email = form.email.value;
-    let emailConf = form.emailConf.value;
-    let senha = form.password.value;
-    let senhaConf = form.passwordConf.value;
-    let cpf = form.cpf.value;
-    let result = document.querySelector('#empresa').checked
+$(function () {
+    
+function Verificacoes(s) {
+    // let {nome, cpf, email, emailConf, senha, senhaConf} = submissao;
 
+    console.log(s);
 
-    if (nome.length >= 4 && nome.length <= 65) {
-        form.nome.focus;
-        if (email === emailConf) {
-            form.email.focus;
-            if (senha === senhaConf && senha.length > 8) {
-                form.senha.focus;
-                /*if (result) {
-                    if (VerCNPJ(cpf)) {
-                        return true;
-                    } else {
-                        alert("CNPJ inválido")
-                        return false;
-                    }
-                } else {
-                    if (VerCPF(cpf)) {
-                        return true;
-                        alert("Tranquilo")
-                    }
-                    else {
-                        alert("CPF Inválido.")
-                        return false;
-                    }
-                }*/
-            } // If Senha
-            else {
-                alert("Senha diferente ou muito curta, tente novamente.")
-                return false;
-            }
-        } // If Email
-        else {
-            alert("Emails diferentes, tente novamente.")
-            return false;
-        } // Else Email
-    } //If Nome
-    else {
+    const condicaoNome = s.nome.length >= 4 && s.nome.length <= 65;
+    const condicaoEmail = s.email === s.emailConf;
+    const condicaoSenha = (s.senha === s.senhaConf) && (s.senha.length > 8);
+    const condicaoCpf = VerCPF(s.cpf);
+
+    if (condicaoNome && condicaoEmail && condicaoSenha && condicaoCpf) {
+        return true;
+    }
+    
+    else if (!condicaoNome) {
         alert("Nome muito curto, tente outro.")
         return false;
-    } // Else Nome
-} // Funcao
+    } else if (!condicaoEmail) {
+        alert("Emails diferentes, tente novamente.")
+        return false;
+    } else if (!condicaoSenha) {
+        alert("Senha diferente ou muito curta, tente novamente.")
+        return false;
+    } else if (!condicaoCpf) {
+        alert("CPF Inválido.")
+        return false;
+    } 
+    
+} // Funcao 
 
 function VerCPF(cpf) {
     var soma;
@@ -83,22 +65,41 @@ function VerCPF(cpf) {
 
 function VerCNPJ(cnpj) {
     alert("Bom Dia")
-}
+} 
 
 
-$ (document).on("click", "#botaoCadastro",
-    function(){
-        alert("aa");
-        nome = $("#nome").val();
-        cpf = $("#cpf").val();
-        email = $("#email").val();
-        password = $("#password").val();
-        endereco = $("#endereco").val();
-        bairro = $("#bairro").val();
-        cidade = $("#cidade").val();
+    $(document).on("click", "#botaoCadastro", function () {
+        const nome = $("#nome").val();
+        const cpf = $("#cpf").val();
+        const email = $("#email").val();
+        const emailConf = $("#emailConf").val();
+        const senha = $("#password").val();
+        const senhaConf = $("#passwordConf").val();
+        const endereco = $("#endereco").val();
+        const bairro = $("#bairro").val();
+        const cidade = $("#cidade").val();
 
-        var dados = JSON.stringify({ nome: nome, cpf: cpf, email: email,
-        password: password, endereco: endereco, bairro: bairro, cidade: cidade});
+        const submissao = {
+            nome, 
+            cpf, 
+            email,
+            emailConf,
+            senha,
+            senhaConf
+        };
+
+        if(Verificacoes(submissao)) {
+
+        const dados = JSON.stringify({
+            nome: nome,
+            cpf: cpf,
+            email: email,
+            senha: senha,
+            endereco: endereco,
+            bairro: bairro,
+            cidade: cidade
+        });
+
 
         // Aqui vai ter que ter um if para ver se é uma empresa
         // Ou um funcionário que será adicionado ao sistema.
@@ -111,50 +112,54 @@ $ (document).on("click", "#botaoCadastro",
             success: pessoaIncluida, // Chama a funcao para processar o resultado
             error: erroAoIncluir
         });
-
-
-
-    function pessoaIncluida (retorno) {
-        if (retorno.resultado == "ok") {
-            alert("Pessoa incluída com sucesso!");
-
-            $("#nome").val("");
-            $("#cpf").val("");
-            $("#email").val("");
-            $("#password").val("");
-            $("#endereco").val("");
-            $("#bairro").val("");
-            $("#cidade").val("");
-
-        } else {
-            alert(retorno.resultado + ":" + retorno.detalhes);
-        }
     }
 
 
-    /*function pessoaIncluida (retorno) {
-        if (retorno.resultado == "ok") {
-            alert("Pessoa incluída com sucesso!");
+        function pessoaIncluida(retorno) {
+            if (retorno.resultado == "ok") {
+                alert("Pessoa incluída com sucesso!");
 
-            $("#nome").val("");
-            $("#cpf").val("");
-            $("#email").val("");
-            $("#password").val("");
-            $("#endereco").val("");
-            $("#bairro").val("");
-            $("#cidade").val("");
+                $("#nome").val("");
+                $("#cpf").val("");
+                $("#email").val("");
+                $("#emailConf").val("");
+                $("#password").val("");
+                $("#passwordConf").val("");
+                $("#endereco").val("");
+                $("#bairro").val("");
+                $("#cidade").val("");
 
-        } else {
-            alert(retorno.resultado + ":" + retorno.detalhes);
+            } else {
+                alert(retorno.resultado + ":" + retorno.detalhes);
+            }
         }
-    }*/
 
-    /*
-     * Fazer mais um desses com jquery com incluirempresa.
-     * Utilizando ajax etc.
-    */
 
-    function erroAoIncluir (retorno) {
-        alert("ERRO: "+retorno.resultado + ":" + retorno.detalhes);
-    }
+        /*function pessoaIncluida (retorno) {
+            if (retorno.resultado == "ok") {
+                alert("Pessoa incluída com sucesso!");
+    
+                $("#nome").val("");
+                $("#cpf").val("");
+                $("#email").val("");
+                $("#password").val("");
+                $("#endereco").val("");
+                $("#bairro").val("");
+                $("#cidade").val("");
+    
+            } else {
+                alert(retorno.resultado + ":" + retorno.detalhes);
+            }
+        }*/
+
+        /*
+            * Fazer mais um desses com jquery com incluirempresa.
+            * Utilizando ajax etc.
+        */
+
+        function erroAoIncluir(retorno) {
+            alert("ERRO: " + retorno.resultado + ":" + retorno.detalhes);
+        }
     });
+    
+});

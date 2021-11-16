@@ -1,68 +1,4 @@
-from config import *
-
-
-# Classe usuário
-class Usuario(db.Model):
-    '''Classe genérica usuário
-
-    Essa classe é uma classe genérica, que contém todos os atributos comuns
-    entre os funcionários e as empresas
-    '''
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(256))
-    email = db.Column(db.String(256))
-    senha = db.Column(db.String(256))
-    rua = db.Column(db.String(256))
-    bairro = db.Column(db.String(256))
-    cidade = db.Column(db.String(256))
-    complemento = db.Column(db.String(40))
-
-
-# Classe Empresa
-class Empresa(Usuario):
-    '''Classe Empresa
-
-    Essa classe herda tudo de usuário e ainda complementa com o cnpj
-
-    return: todos os atributos no formato json.
-    '''
-    cnpj = db.Column(db.String(18))
-
-    # Retorna os atributos no formato json.
-    def json(self):
-        return {
-            'id': self.id,
-            'nome': self.nome,
-            'email': self.email,
-            'senha': self.senha,
-            'rua': self.rua,
-            'bairro': self.bairro,
-            'cidade': self.cidade,
-            'cnpj': self.cnpj
-        }
-
-
-class Funcionario(Usuario):
-    '''Classe Empresa
-
-    Essa classe herda tudo de usuário e ainda complementa com o cpf
-
-    return: todos os atributos no formato json.
-    '''
-    cpf = db.Column(db.String(14))
-
-    # Retorna os atributos no formato json.
-    def json(self):
-        return {
-            'id': self.id,
-            'nome': self.nome,
-            'email': self.email,
-            'senha': self.senha,
-            'rua': self.rua,
-            'bairro': self.bairro,
-            'cidade': self.cidade,
-            'cpf': self.cpf
-        }
+from classes import *
 
 
 # Apenas roda o programa quando esse código é o principal
@@ -102,6 +38,7 @@ if __name__ == '__main__':
         except Exception as e:
             # informar mensagem de erro
             resposta = jsonify({"resultado": "erro", "detalhes": str(e)})
+            print("não salvo no banco de dados.")
         # adicionar cabeçalho de liberação de origem
         resposta.headers.add("Access-Control-Allow-Origin", "*")
         return resposta
@@ -120,7 +57,7 @@ if __name__ == '__main__':
             # informar mensagem de erro
             resposta = jsonify({"resultado": "erro", "detalhes": str(e)})
         # adicionar cabeçalho de liberação de origem
-        resposta.headers.add("Access-Control-Allow-Origin", "")
+        resposta.headers.add("Access-Control-Allow-Origin", "*")
         return resposta
 
 
@@ -139,11 +76,11 @@ if __name__ == '__main__':
     # Lista todos os funcionários cadastrados
     @app.route("/listar_funcionarios")
     def listar_funcionarios():
-        funcionario = Funcionario(nome='Jose da Costa', email='tetse@teste.com',
-                                  senha='testesenha', rua='rua Teste', bairro='Teste',
+        '''funcionario = Funcionario(nome='Jose da Costa', email='tetse@teste.com',
+                                  senha='testesenha', endereco='rua Teste, n 2', bairro='Teste',
                                   cidade='Teste', cpf='11111111111')
         db.session.add(funcionario)
-        db.session.commit()
+        db.session.commit()'''
         funcionarios = db.session.query(Funcionario).all()
 
         retorno = []
