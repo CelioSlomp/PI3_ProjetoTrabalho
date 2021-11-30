@@ -14,6 +14,14 @@ class Usuario(db.Model):
     endereco = db.Column(db.String(256))
     bairro = db.Column(db.String(256))
     cidade = db.Column(db.String(256))
+    
+    
+    type = db.Column(db.String(50))
+    
+    __mapper_args__={
+        'polymorphic_identity':'usuario',
+        'polymorphic_on':type
+    }
 
 
 
@@ -39,6 +47,10 @@ class Empresa(Usuario):
             'cidade': self.cidade,
             'cnpj': self.cnpj
         }
+    
+    __mapper_args__={
+        'polymorphic_identity':'empresa',
+    }
 
 
 class Funcionario(Usuario):
@@ -62,3 +74,7 @@ class Funcionario(Usuario):
             'cidade': self.cidade,
             'cpf': self.cpf
         }
+    
+    __mapper_args__={
+        'polymorphic_identity':'funcionario',
+    }

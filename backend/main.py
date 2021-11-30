@@ -26,7 +26,6 @@ if __name__ == '__main__':
 
     @app.route("/adicionar_funcionario", methods=['POST'])
     def incluir_funcionario():
-        print("Passou aqui")
         resposta = jsonify({"resultado": "ok", "detalhes": "ok"})
         # receber as informações da nova pessoa
         dados = request.get_json()  # (force=True) dispensa Content-Type na requisição
@@ -76,11 +75,6 @@ if __name__ == '__main__':
     # Lista todos os funcionários cadastrados
     @app.route("/listar_funcionarios")
     def listar_funcionarios():
-        '''funcionario = Funcionario(nome='Jose da Costa', email='tetse@teste.com',
-                                  senha='testesenha', endereco='rua Teste, n 2', bairro='Teste',
-                                  cidade='Teste', cpf='11111111111')
-        db.session.add(funcionario)
-        db.session.commit()'''
         funcionarios = db.session.query(Funcionario).all()
 
         retorno = []
@@ -89,6 +83,7 @@ if __name__ == '__main__':
 
         return jsonify(retorno)
 
+    
 
     # Inicia o servidor
     app.run(debug=True)
