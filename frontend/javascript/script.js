@@ -219,18 +219,7 @@ $(function () {
                     }
                 }
             }
-
-            // Aqui vai ter que ter um if para ver se é uma empresa
-            // Ou um funcionário que será adicionado ao sistema.
         }
-
-
-
-
-        /*
-            * Fazer mais um desses com jquery com incluirempresa.
-            * Utilizando ajax etc.
-        */
 
         function erroAoIncluir(retorno) {
             alert("ERRO: " + retorno.resultado + ":" + retorno.detalhes);
