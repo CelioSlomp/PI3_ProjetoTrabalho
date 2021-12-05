@@ -31,6 +31,22 @@ if __name__ == '__main__':
         dados = request.get_json()  # (force=True) dispensa Content-Type na requisição
         try:  # tentar executar a operação
             nova = Funcionario(**dados)  # criar a nova pessoa
+            
+            # Verificar se já existe algum email/cpf/cnpj registrado
+            novo_user = db.session.query(Funcionario).filter(Funcionario.email == dados["email"]).first()
+            if novo_user != None:
+                resposta = jsonify({"resultado": "erro", "detalhes": "Email já está cadastrado"})
+                return resposta
+            
+            novo_user = db.session.query(Empresa).filter(Empresa.email == dados["email"]).first()
+            if novo_user != None:
+                resposta = jsonify({"resultado": "erro", "detalhes": "Email já está cadastrado"})
+                return resposta
+            
+            novo_user = db.session.query(Funcionario).filter(Funcionario.cpf == dados["cpf"]).first()
+            if novo_user != None:
+                resposta = jsonify({"resultado": "erro", "detalhes": "CPF já está cadastrado"})
+                return resposta
             db.session.add(nova)  # adicionar no BD
             db.session.commit()  # efetivar a operação de gravação
             print("salvo no banco de dados.")
@@ -50,6 +66,22 @@ if __name__ == '__main__':
         dados = request.get_json()  # (force=True) dispensa Content-Type na requisição
         try:  # tentar executar a operação
             nova = Empresa(**dados)  # criar a nova pessoa
+            
+            # Verificar se já existe algum email/cpf/cnpj registrado
+            novo_user = db.session.query(Empresa).filter(Empresa.email == dados["email"]).first()
+            if novo_user != None:
+                resposta = jsonify({"resultado": "erro", "detalhes": "Email já está cadastrado"})
+                return resposta
+            
+            novo_user = db.session.query(Funcionario).filter(Funcionario.email == dados["email"]).first()
+            if novo_user != None:
+                resposta = jsonify({"resultado": "erro", "detalhes": "Email já está cadastrado"})
+                return resposta
+            
+            novo_user = db.session.query(Empresa).filter(Empresa.cnpj == dados["cnpj"]).first()
+            if novo_user != None:
+                resposta = jsonify({"resultado": "erro", "detalhes": "CNPJ já cadastrado"})
+                return resposta
             db.session.add(nova)  # adicionar no BD
             db.session.commit()  # efetivar a operação de gravação
         except Exception as e:  # em caso de erro...
@@ -83,6 +115,48 @@ if __name__ == '__main__':
 
         return jsonify(retorno)
 
+
+    @app.route("/jalogadon/<int:idusuario>" )
+    def jalogadon(idusuario):
+        usuarios = db.session.query(Funcionario).filter(Funcionario.id == idusuario)
+        if usuarios == None:
+            usuarios = db.session.query(Empresa).filter(Empresa.id == idusuario)
+        retorno = []
+        retorno.append(usuarios[0].json())
+        resposta = jsonify(retorno)
+        resposta.headers.add("Access-Control-Allow-Origin", "*")
+        return resposta
+
+    @app.route("/check_login", methods=['POST'])
+    def check_login():
+        resposta = jsonify({"resultado": "ok", "detalhes": "ok"})
+        # receber as informações da nova empresa
+        dados = request.get_json()  # (force=True) dispensa Content-Type na requisição
+        try:  # tentar executar a operação
+            
+            # Verificar se já existe algum email/cpf/cnpj registrado
+            user = db.session.query(Empresa).filter(Empresa.email == dados["email"]).first()
+            
+            # Caso não exista uma empresa com esse email, buscará em funcionarios
+            if user == None:
+                user = db.session.query(Funcionario).filter(Funcionario.email == dados["email"]).first()
+            if user.senha != dados["senha"]:
+                print("senha incorreta.")
+                resposta = jsonify({"resultado": "erro", "detalhes": "Senha incorreta"})
+                return resposta
+            else:
+                resposta = jsonify({"resultado": user.id})
+    
+                resposta.headers.add("Access-Control-Allow-Origin", "*")
+                return resposta
+
+
+        except Exception as e:  # em caso de erro...
+            # informar mensagem de erro
+            resposta = jsonify({"resultado": "erro", "detalhes": str(e)})
+        # adicionar cabeçalho de liberação de origem
+        resposta.headers.add("Access-Control-Allow-Origin", "*")
+        return resposta
     
 
     # Inicia o servidor

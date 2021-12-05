@@ -12,18 +12,20 @@
     <!-- div que possui a aba de login -->
     <div class="login">
         <h1>Entrar</h1>
-        <form method="POST">
+        <form action="#">
 
             <!-- todas as input box estão aqui. -->
-            <input type="text" id="email" placeholder="E-mail"> <br>
-            <input type="password" id="password" placeholder="Senha"><br>
-            <input type="submit" value="Entrar">
+            <input type="text" id="loginemail" placeholder="E-mail"> <br>
+            <input type="password" id="loginpassword" placeholder="Senha"><br>
+            <input type="submit" id="botaoLogin" value="Entrar">
 
         </form>
 
         <!-- ao clicar no link, o usuário é levado para a página de cadastro. -->
         <p>Não é cadastrado? <a href="cadastro.html">Clique aqui</a></p>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../javascript/script.js"></script>
 
 </body>
 </html>
