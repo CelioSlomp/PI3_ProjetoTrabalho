@@ -159,5 +159,31 @@ if __name__ == '__main__':
         return resposta
     
 
+    @app.route("/deletar_conta/<int:idusuario>", methods=['DELETE'])
+    def deletar_conta(idusuario):
+        # prepara uma resposta
+        resposta = jsonify({"resultado": "ok", "detalhes": "ok"})
+        try:
+            
+            user = db.session.query(Empresa).filter(Empresa.id == idusuario).first()
+            
+            # Caso não exista uma empresa com esse email, buscará em funcionarios
+            if user == None:
+                user = db.session.query(Funcionario).filter(Funcionario.id == idusuario).first()
+            
+            if user.type == "empresa":
+                Empresa.query.filter(Empresa.id == idusuario).delete()
+            elif user.type == "funcionario":
+                Funcionario.query.filter(Funcionario.id == idusuario).delete()
+            else:
+                pass
+            
+            db.session.commit()
+        except Exception as e:
+            # informar mensagem de erro
+            resposta = jsonify({"resultado": "erro", "detalhes":str(e)})
+        resposta.headers.add("Access-Control-Allow-Origin", "*")  
+        return resposta
+        
     # Inicia o servidor
     app.run(debug=True)

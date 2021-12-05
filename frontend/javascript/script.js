@@ -119,13 +119,34 @@ function jalogadon() {
         url: 'http://localhost:5000/jalogadon/' + usuario,
         method: 'GET',
         dataType: 'json', // os dados são recebidos no formato json
-        success: function(){}, // chama a função exibirUsuario para processar o resultado
+        success: function () { },
         error: function () {
             alert("Deu erro 'jalogadon'");
         }
     });
-}
+} // Funcao
+
 $(function () {
+    $(document).on("click", "#botaoDeletar", function () {
+        
+        idusuario = sessionStorage.perfil[0];
+        
+        $.ajax({
+            url: "http://localhost:5000/deletar_conta/"+idusuario,
+            type: 'DELETE',
+            dataType: 'json', // Tipo de formato recebido
+            success: pessoaDeletada, // Chama a funcao para processar o resultado
+            error: erroAoDeletar
+        });
+        function pessoaDeletada(retorno) {
+            alert("Deletado com sucesso.");
+        }
+        function erroAoDeletar(retorno) {
+            alert("ERRO: " + retorno.resultado + ":" + retorno.detalhes);
+        }
+
+    });
+
     $(document).on("click", "#botaoCadastro", function () {
         const nome = $("#nome").val();
         const cpf = $("#cpf").val();
