@@ -119,20 +119,50 @@ function jalogadon() {
         url: 'http://localhost:5000/jalogadon/' + usuario,
         method: 'GET',
         dataType: 'json', // os dados são recebidos no formato json
-        success: function () { },
+        success: sucesso,
         error: function () {
             alert("Deu erro 'jalogadon'");
         }
     });
+
+    function sucesso(user) {
+        if (user[0].cpf != null) {
+            var linha = '<h2 class="perfiluser">' + user[0].nome + '</h2>';
+            var listadados = [
+                '<br><b>cpf: </b>' + user[0].cpf,
+                '<br><b>E-Mail: </b>' + user[0].email,
+                '<br><b>Cidade: </b>' + user[0].cidade,
+                '<br><b>Bairro: </b>' + user[0].bairro,
+                '<br><b>Endereço: </b>' + user[0].endereco,
+            ];
+        } else {
+            var linha = '<h2 class="perfiluser">' + user[0].nome + '</h2>';
+            var listadados = [
+                '<br><b>cnpj: </b>' + user[0].cnpj, 
+                '<br><b>E-Mail: </b>' + user[0].email,
+                '<br><b>Cidade: </b>' + user[0].cidade,
+                '<br><b>Bairro: </b>' + user[0].bairro,
+                '<br><b>Endereço: </b>' + user[0].endereco,
+            ];
+        } // else
+
+        for (var i in listadados) {
+            let lin = '<span class="perfiluser">' + listadados[i] + '</span>';
+            linha = linha + lin
+        };
+
+        $("#areadoperfil").append(linha);
+
+    } // Funcao
 } // Funcao
 
 $(function () {
     $(document).on("click", "#botaoDeletar", function () {
-        
+
         idusuario = sessionStorage.perfil[0];
-        
+
         $.ajax({
-            url: "http://localhost:5000/deletar_conta/"+idusuario,
+            url: "http://localhost:5000/deletar_conta/" + idusuario,
             type: 'DELETE',
             dataType: 'json', // Tipo de formato recebido
             success: pessoaDeletada, // Chama a funcao para processar o resultado

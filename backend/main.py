@@ -118,11 +118,11 @@ if __name__ == '__main__':
 
     @app.route("/jalogadon/<int:idusuario>" )
     def jalogadon(idusuario):
-        usuarios = db.session.query(Funcionario).filter(Funcionario.id == idusuario)
+        usuarios = db.session.query(Funcionario).filter(Funcionario.id == idusuario).first()
         if usuarios == None:
-            usuarios = db.session.query(Empresa).filter(Empresa.id == idusuario)
+            usuarios = db.session.query(Empresa).filter(Empresa.id == idusuario).first()
         retorno = []
-        retorno.append(usuarios[0].json())
+        retorno.append(usuarios.json())
         resposta = jsonify(retorno)
         resposta.headers.add("Access-Control-Allow-Origin", "*")
         return resposta

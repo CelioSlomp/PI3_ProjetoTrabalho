@@ -76,3 +76,27 @@
 .caixa p {
     color: #808080;
 }
+
+.deletebutton {
+    background: none;
+    border: 2px solid #48A8D5;
+    width: 200px;
+    height: 30px;
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.areaperfil{
+    position: absolute;
+    top: 450px;
+    left: 15%;
+    display: block;
+}
+
+.perfiluser{
+    position: relative;
+    top: 80px;
+    left: 15%;
+    display: block;
+}
