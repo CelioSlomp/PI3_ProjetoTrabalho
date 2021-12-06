@@ -14,7 +14,7 @@ class Usuario(db.Model):
     endereco = db.Column(db.String(256))
     bairro = db.Column(db.String(256))
     cidade = db.Column(db.String(256))
-    
+    requisitos = db.Column(db.String(256))
     
     type = db.Column(db.String(50))
     

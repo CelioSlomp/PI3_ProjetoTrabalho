@@ -130,7 +130,7 @@ function jalogadon() {
             var linha = '<h2 class="perfiluser">' + user[0].nome + '</h2>';
             var listadados = [
                 '<br><b>cpf: </b>' + user[0].cpf,
-                '<br><b>E-Mail: </b>' + user[0].email,
+                '<br><b>Email: </b>' + user[0].email,
                 '<br><b>Cidade: </b>' + user[0].cidade,
                 '<br><b>Bairro: </b>' + user[0].bairro,
                 '<br><b>Endereço: </b>' + user[0].endereco,
@@ -139,7 +139,7 @@ function jalogadon() {
             var linha = '<h2 class="perfiluser">' + user[0].nome + '</h2>';
             var listadados = [
                 '<br><b>cnpj: </b>' + user[0].cnpj, 
-                '<br><b>E-Mail: </b>' + user[0].email,
+                '<br><b>Email: </b>' + user[0].email,
                 '<br><b>Cidade: </b>' + user[0].cidade,
                 '<br><b>Bairro: </b>' + user[0].bairro,
                 '<br><b>Endereço: </b>' + user[0].endereco,
@@ -157,6 +157,31 @@ function jalogadon() {
 } // Funcao
 
 $(function () {
+    $(document).on("click", "#botaoSalvar", function (){
+        idusuario = sessionStorage.perfil[0];
+
+        const req = $("#req").val();
+
+        var dados = JSON.stringify({
+            requisitos: req,
+        });
+        alert("chegou aqui")
+        $.ajax({
+            url: "http://localhost:5000/salvar_requisitos/" + idusuario,
+            type: 'POST',
+            dataType: 'json', // Tipo de formato recebido
+            contentType: 'application/json', // Tipo de formato enviado
+            data: dados, // Os dados que são enviados
+            success: function(){
+                alert("Requisitos salvos com sucesso")
+            }, // Chama a funcao para processar o resultado
+            error: function(){
+                alert("Erro ajax BotaoSalvar")
+            }
+        });
+        alert("passou no ajax")
+    });
+
     $(document).on("click", "#botaoDeletar", function () {
 
         idusuario = sessionStorage.perfil[0];

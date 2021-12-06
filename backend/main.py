@@ -185,5 +185,23 @@ if __name__ == '__main__':
         resposta.headers.add("Access-Control-Allow-Origin", "*")  
         return resposta
         
+    @app.route("/salvar_requisitos/<int:idusuario>", methods=['POST'])
+    def salvar_requisitos(idusuario):
+        print("Passou aqui")
+        user = db.session.query(Empresa).filter(Empresa.id == idusuario).first()
+        # Caso não exista uma empresa com esse email, buscará em funcionarios
+        if user == None:
+            user = db.session.query(Funcionario).filter(Funcionario.id == idusuario).first()
+        req = request.get_json()
+        try:
+            print("Chegou aqui")
+            user.requisitos = req["requisitos"]
+            db.session.commit()
+            resposta = jsonify({"resultado": "ok", "detalhes":"ok"})
+        except Exception as e:
+            resposta = jsonify({"resultado": "erro", "detalhes":str(e)})
+        resposta.headers.add("Access-Control-Allow-Origin", "*")
+        return resposta
+        
     # Inicia o servidor
     app.run(debug=True)
