@@ -127,6 +127,7 @@ if __name__ == '__main__':
         resposta.headers.add("Access-Control-Allow-Origin", "*")
         return resposta
 
+
     @app.route("/check_login", methods=['POST'])
     def check_login():
         resposta = jsonify({"resultado": "ok", "detalhes": "ok"})
@@ -157,7 +158,7 @@ if __name__ == '__main__':
         # adicionar cabeçalho de liberação de origem
         resposta.headers.add("Access-Control-Allow-Origin", "*")
         return resposta
-    
+
 
     @app.route("/deletar_conta/<int:idusuario>", methods=['DELETE'])
     def deletar_conta(idusuario):
@@ -185,16 +186,15 @@ if __name__ == '__main__':
         resposta.headers.add("Access-Control-Allow-Origin", "*")  
         return resposta
         
+
     @app.route("/salvar_requisitos/<int:idusuario>", methods=['POST'])
     def salvar_requisitos(idusuario):
-        print("Passou aqui")
         user = db.session.query(Empresa).filter(Empresa.id == idusuario).first()
         # Caso não exista uma empresa com esse email, buscará em funcionarios
         if user == None:
             user = db.session.query(Funcionario).filter(Funcionario.id == idusuario).first()
         req = request.get_json()
         try:
-            print("Chegou aqui")
             user.requisitos = req["requisitos"]
             db.session.commit()
             resposta = jsonify({"resultado": "ok", "detalhes":"ok"})
@@ -202,6 +202,57 @@ if __name__ == '__main__':
             resposta = jsonify({"resultado": "erro", "detalhes":str(e)})
         resposta.headers.add("Access-Control-Allow-Origin", "*")
         return resposta
-        
+
+
+    @app.route("/main/<int:idusuario>", methods=['GET'])
+    def main(idusuario):
+        user = db.session.query(Empresa).filter(Empresa.id == idusuario).first()
+        # Caso não exista uma empresa com esse email, buscará em funcionarios
+        if user == None:
+            user = db.session.query(Funcionario).filter(Funcionario.id == idusuario).first()       
+        listaUsuarios = []
+        try:
+            reqUser = user.requisitos
+            reqUser = reqUser.split(",")
+            if(len(reqUser) == 0 or reqUser[0] == None):
+                resposta = jsonify({"requisitos nulos"})
+                resposta.headers.add("Access-Control-Allow-Origin", "*")
+                return resposta
+
+            if user.type == "funcionario":
+                empresas = db.session.query(Empresa).all()
+                for empresa in empresas:
+                    num = 0
+                    for i in empresa.requisitos.split(","):
+                        for j in reqUser:
+                            if i == j:
+                                num += num + (1/len(reqUser))
+                            else:
+                                pass
+                    if num >= 0.8:
+                        listaUsuarios.append(empresa.json())
+                resposta = jsonify(listaUsuarios)
+                resposta.headers.add("Access-Control-Allow-Origin", "*")
+                return resposta
+            else:
+                funcionarios = db.session.query(Funcionario).all()
+                for funcionario in funcionarios:
+                    num = 0
+                    for i in funcionario.requisitos.split(","):
+                        for j in reqUser:
+                            if i == j:
+                                num += num + (1/len(reqUser))
+                            else:
+                                pass
+                    if num > 0.8:
+                        listaUsuarios.append(funcionario.json())
+
+                resposta = jsonify(listaUsuarios)
+                resposta.headers.add("Access-Control-Allow-Origin", "*")
+                return resposta
+        except Exception as e:
+            resposta = jsonify({"resultado": "erro", "detalhes":str(e)})
+        resposta.headers.add("Access-Control-Allow-Origin", "*")
+        return resposta
     # Inicia o servidor
     app.run(debug=True)

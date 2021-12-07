@@ -138,7 +138,7 @@ function jalogadon() {
         } else {
             var linha = '<h2 class="perfiluser">' + user[0].nome + '</h2>';
             var listadados = [
-                '<br><b>cnpj: </b>' + user[0].cnpj, 
+                '<br><b>cnpj: </b>' + user[0].cnpj,
                 '<br><b>Email: </b>' + user[0].email,
                 '<br><b>Cidade: </b>' + user[0].cidade,
                 '<br><b>Bairro: </b>' + user[0].bairro,
@@ -156,8 +156,58 @@ function jalogadon() {
     } // Funcao
 } // Funcao
 
+function listarRequisitos() {
+    usuario = sessionStorage.perfil[0]
+    $.ajax({
+        url: 'http://localhost:5000/main/' + usuario,
+        method: 'GET',
+        dataType: 'json', // os dados são recebidos no formato json
+        success: sucesso,
+        error: function () {
+            alert("Deu erro 'listarRequisitos'");
+        }
+    });
+    function sucesso(user) {
+
+        for (var i in user) {
+            alert(user[i].nome)
+
+            if (user[i].cpf != null) {
+                var linha = '';
+                var listadados = [
+                    '<br><hr><b>Nome: </b>' + user[i].nome,
+                    '<b>Email: </b>' + user[i].email,
+                    '<b>Cidade: </b>' + user[i].cidade,
+                    '<b>Bairro: </b>' + user[i].bairro,
+                    '<b>Endereço: </b>' + user[i].endereco,
+                    '<b>Requisitos: </b>' + user[i].requisitos,
+                ];
+
+            } else {
+                var linha = '';
+                var listadados = [
+                    '<br><hr><b>Nome: </b>' + user[i].nome,
+                    '<b>Email: </b>' + user[i].email,
+                    '<b>Cidade: </b>' + user[i].cidade,
+                    '<b>Bairro: </b>' + user[i].bairro,
+                    '<b>Endereço: </b>' + user[i].endereco,
+                    '<b>Requisitos: </b>' + user[i].requisitos,
+                ];
+
+            } // else
+            for (var i in listadados) {
+                let lin = '<span class="perfiluser">' + listadados[i] + '</span>';
+                linha = linha + lin
+            }
+            $("#arearequisitos").append(linha);
+        }
+        
+
+    }
+} // Funcao
+
 $(function () {
-    $(document).on("click", "#botaoSalvar", function (){
+    $(document).on("click", "#botaoSalvar", function () {
         idusuario = sessionStorage.perfil[0];
 
         const req = $("#req").val();
@@ -172,10 +222,10 @@ $(function () {
             dataType: 'json', // Tipo de formato recebido
             contentType: 'application/json', // Tipo de formato enviado
             data: dados, // Os dados que são enviados
-            success: function(){
+            success: function () {
                 alert("Requisitos salvos com sucesso")
             }, // Chama a funcao para processar o resultado
-            error: function(){
+            error: function () {
                 alert("Erro ajax BotaoSalvar")
             }
         });

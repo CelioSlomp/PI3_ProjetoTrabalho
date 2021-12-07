@@ -24,7 +24,6 @@ class Usuario(db.Model):
     }
 
 
-
 # Classe Empresa
 class Empresa(Usuario):
     '''Classe Empresa
