@@ -170,7 +170,6 @@ function listarRequisitos() {
     function sucesso(user) {
 
         for (var i in user) {
-            alert(user[i].nome)
 
             if (user[i].cpf != null) {
                 var linha = '';
@@ -215,7 +214,6 @@ $(function () {
         var dados = JSON.stringify({
             requisitos: req,
         });
-        alert("chegou aqui")
         $.ajax({
             url: "http://localhost:5000/salvar_requisitos/" + idusuario,
             type: 'POST',
@@ -229,7 +227,6 @@ $(function () {
                 alert("Erro ajax BotaoSalvar")
             }
         });
-        alert("passou no ajax")
     });
 
     $(document).on("click", "#botaoDeletar", function () {

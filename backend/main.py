@@ -214,6 +214,7 @@ if __name__ == '__main__':
         try:
             reqUser = user.requisitos
             reqUser = reqUser.split(",")
+
             if(len(reqUser) == 0 or reqUser[0] == None):
                 resposta = jsonify({"requisitos nulos"})
                 resposta.headers.add("Access-Control-Allow-Origin", "*")
@@ -223,35 +224,34 @@ if __name__ == '__main__':
                 empresas = db.session.query(Empresa).all()
                 for empresa in empresas:
                     num = 0
-                    for i in empresa.requisitos.split(","):
-                        for j in reqUser:
-                            if i == j:
-                                num += num + (1/len(reqUser))
-                            else:
-                                pass
-                    if num >= 0.8:
+                    if empresa.requisitos != None:
+                        for i in empresa.requisitos.split(","):
+                            for j in reqUser:
+                                if i == j:
+                                    num += 1/len(reqUser)
+                                else:
+                                    pass
+                    if num >= 0.75:
                         listaUsuarios.append(empresa.json())
-                resposta = jsonify(listaUsuarios)
-                resposta.headers.add("Access-Control-Allow-Origin", "*")
-                return resposta
+
             else:
                 funcionarios = db.session.query(Funcionario).all()
                 for funcionario in funcionarios:
                     num = 0
-                    for i in funcionario.requisitos.split(","):
-                        for j in reqUser:
-                            if i == j:
-                                num += num + (1/len(reqUser))
-                            else:
-                                pass
-                    if num > 0.8:
+                    if funcionario.requisitos != None:
+                        for i in funcionario.requisitos.split(","):
+                            for j in reqUser:
+                                if i == j:
+                                    num += 1/len(reqUser)
+                                else:
+                                    pass
+                    if num >= 0.75:
                         listaUsuarios.append(funcionario.json())
 
-                resposta = jsonify(listaUsuarios)
-                resposta.headers.add("Access-Control-Allow-Origin", "*")
-                return resposta
         except Exception as e:
             resposta = jsonify({"resultado": "erro", "detalhes":str(e)})
+            
+        resposta = jsonify(listaUsuarios)
         resposta.headers.add("Access-Control-Allow-Origin", "*")
         return resposta
     # Inicia o servidor
